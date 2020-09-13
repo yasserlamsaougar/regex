@@ -15,8 +15,8 @@ func TestEmptyState(t *testing.T) {
 }
 
 func TestNewState(t *testing.T) {
-	newState := newState(false, map[string][]state{
-		"a": []state{},
+	newState := newState(false, map[string][]*state{
+		"a": {},
 	})
 	if newState.accepting {
 		t.Error("the new state should have been created with an accepting field with value false")
@@ -31,15 +31,16 @@ func TestNewState(t *testing.T) {
 
 func TestAddTransitionForSymbol(t *testing.T) {
 	newState := emptyState(true)
-	newState.addTransitionForSymbol("a", emptyState(false))
+	secondState := emptyState(false)
+	newState.addTransitionForSymbol("a", &secondState)
 	if _, ok := newState.transitions["a"]; !ok {
 		t.Errorf("could not find the key a in the list of transitions %v", newState.transitions)
 	}
 }
 
 func TestGetTransitionsForSymbol(t *testing.T) {
-	newState := newState(false, map[string][]state{
-		"a": []state{},
+	newState := newState(false, map[string][]*state{
+		"a": {},
 	})
 	if _, ok := newState.getTransitionsForSymbol("a"); !ok {
 		t.Errorf("could not find the key a in the list of transitions %v", newState.transitions)
