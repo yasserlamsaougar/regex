@@ -1,7 +1,7 @@
 package regex
 
 import (
-	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -177,10 +177,40 @@ func TestGetTransitionTable(t *testing.T) {
 		char("a"),
 		char("b"),
 	)
+	expected := map[int]map[string][]int{
+		0: {
+			EPSILON: []int{1, 2, 0},
+		},
+		1: {
+			"a":     []int{3},
+			EPSILON: []int{1},
+		},
+		2: {
+			"b":     []int{4},
+			EPSILON: []int{2},
+		},
+		3: {
+			EPSILON: []int{3, 5},
+		},
+		4: {
+			EPSILON: []int{4, 5},
+		},
+		5: {
+			EPSILON: []int{5},
+		},
+	}
 	transitionTable := regex.getTransitionTable()
 
-	for key, value := range transitionTable {
-		fmt.Printf("\"%d\": %v\n", key, value)
+	for stateNumber, transitionsBySymbol := range transitionTable {
+		expectedStateTransitions := expected[stateNumber]
+		for symbol, transitions := range transitionsBySymbol {
+			numbers := []int{}
+			expectedTransitions := expectedStateTransitions[symbol]
+			for _, value := range transitions {
+				numbers = append(numbers, value.number)
+			}
+			assert.ElementsMatchf(t, numbers, expectedTransitions, "the state number %d should point to %+v instead pointing to %+v", stateNumber, expectedTransitions, numbers)
+		}
 	}
 
 }

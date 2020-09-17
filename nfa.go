@@ -5,6 +5,7 @@ const EPSILON = "ε"
 type indexValue struct {
 	id        string
 	accepting bool
+	number int
 }
 
 type nfa struct {
@@ -16,33 +17,47 @@ func (thisNfa nfa) test(symbol string) bool {
 	return thisNfa.inState.test(symbol, map[string]bool{})
 }
 
-func (thisNfa nfa) getTransitionTable() map[string]map[string][]indexValue {
-	result := map[string]map[string][]indexValue{}
+func mergeMap(someMap map[string]int, key string, value int) {
+	if _, ok := someMap[key]; !ok {
+		someMap[key] = value
+	}
+}
+
+func mergeMapAndGet(someMap map[string][]indexValue, key string, value []indexValue) []indexValue {
+	if _, ok := someMap[key]; !ok {
+		someMap[key] = value
+	}
+	return someMap[key]
+}
+
+
+
+func (thisNfa nfa) getTransitionTable() map[int]map[string][]indexValue {
+	result := map[int]map[string][]indexValue{}
+	visited := map[string]int{}
 	stack := []*state{thisNfa.inState}
 	for len(stack) > 0 {
 		current := stack[0]
 		var dests = map[string][]indexValue{}
-		if _, ok := result[current.id]; !ok {
+		if _, ok := result[visited[current.id]]; !ok {
+			mergeMap(visited, current.id, len(visited))
 			for symbol, value := range current.transitions {
 				for _, transition := range value {
+					mergeMap(visited, transition.id, len(visited))
 					stack = append(stack, transition)
-					if _, ok := dests[symbol]; !ok {
-						dests[symbol] = []indexValue{}
-					}
-					dests[symbol] = append(dests[symbol], indexValue{
+					dests[symbol] = append(mergeMapAndGet(dests, symbol, []indexValue{}), indexValue{
 						id:        transition.id,
 						accepting: transition.accepting,
+						number: visited[transition.id],
 					})
 				}
-				if _, ok := dests[EPSILON]; !ok {
-					dests[EPSILON] = []indexValue{}
-				}
-				dests[EPSILON] = append(dests[EPSILON], indexValue{
-					id:        current.id,
-					accepting: current.accepting,
-				})
 			}
-			result[current.id] = dests
+			dests[EPSILON] = append(mergeMapAndGet(dests, EPSILON, []indexValue{}), indexValue{
+				id:        current.id,
+				accepting: current.accepting,
+				number: visited[current.id],
+			})
+			result[visited[current.id]] = dests
 		}
 		stack = stack[1:]
 	}
