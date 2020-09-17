@@ -1,6 +1,9 @@
 package regex
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestChar(t *testing.T) {
 	myNfa := char("a")
@@ -46,7 +49,7 @@ func TestConcat(t *testing.T) {
 	}
 	result := concat(rest[0], rest[1:]...)
 
-	for index, _ := range alphabet[0 : len(alphabet)-1] {
+	for index := range alphabet[0 : len(alphabet)-1] {
 		if rest[index].outState.accepting {
 			t.Error("first nfa's outstate accepting value should be false", index)
 		}
@@ -94,12 +97,90 @@ func TestStar(t *testing.T) {
 	}
 }
 
-func TestSmall(t *testing.T) {
-	complex := concat(
-		char("x"),
-		star(char("z")),
+func TestAcceptorSimpleConcat(t *testing.T) {
+	regex := concat(
+		char("a"),
 		char("b"),
-		or(char("a"), char("b"), star(char("c")), char("d")),
 	)
-	t.Log(complex)
+	if !regex.test("ab") {
+		t.Error("the regex ab should match ab")
+	}
+	if regex.test("aa") {
+		t.Error("the regex ab should not match aa")
+	}
+}
+
+func TestAcceptorStar(t *testing.T) {
+	regex := star(
+		concat(
+			char("a"),
+			char("a"),
+		),
+	)
+	if !regex.test("aaaaaaaaaa") {
+		t.Error("the regex should match aaaaaaaaa")
+	}
+	if regex.test("aaaaaaaab") {
+		t.Error("the regex should not match aaaaaaaab")
+	}
+	if regex.test("aaaaaaaaaaa") {
+		t.Error("the regex should not match aaaaaaaaaaa")
+	}
+}
+
+func TestAcceptorOpt(t *testing.T) {
+	regex := opt(
+		char("a"),
+	)
+	if !regex.test("") {
+		t.Error("the regex should match empty string")
+	}
+	if !regex.test("a") {
+		t.Error("the regex should match a")
+	}
+	if regex.test("aa") {
+		t.Error("the regex should not match aa")
+	}
+}
+
+func TestAcceptorOr(t *testing.T) {
+	regex := or(
+		char("a"),
+		char("b"),
+		char("c"),
+		plus(
+			char("a"),
+		),
+	)
+	if !regex.test("a") {
+		t.Error("the regex should match a")
+	}
+	if !regex.test("b") {
+		t.Error("the regex should match b")
+	}
+	if !regex.test("c") {
+		t.Error("the regex should match c")
+	}
+	if !regex.test("aaaaaaaaaa") {
+		t.Error("the regex should match aaaaaaaaaa")
+	}
+	if regex.test("") {
+		t.Error("the regex should not match empty string")
+	}
+	if regex.test("vv") {
+		t.Error("the regex should not match vv")
+	}
+}
+
+func TestGetTransitionTable(t *testing.T) {
+	regex := or(
+		char("a"),
+		char("b"),
+	)
+	transitionTable := regex.getTransitionTable()
+
+	for key, value := range transitionTable {
+		fmt.Printf("\"%d\": %v\n", key, value)
+	}
+
 }

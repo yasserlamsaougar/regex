@@ -2,13 +2,52 @@ package regex
 
 const EPSILON = "ε"
 
+type indexValue struct {
+	id        string
+	accepting bool
+}
+
 type nfa struct {
 	inState  *state
 	outState *state
 }
 
 func (thisNfa nfa) test(symbol string) bool {
-	return thisNfa.inState.test(symbol)
+	return thisNfa.inState.test(symbol, map[string]bool{})
+}
+
+func (thisNfa nfa) getTransitionTable() map[string]map[string][]indexValue {
+	result := map[string]map[string][]indexValue{}
+	stack := []*state{thisNfa.inState}
+	for len(stack) > 0 {
+		current := stack[0]
+		var dests = map[string][]indexValue{}
+		if _, ok := result[current.id]; !ok {
+			for symbol, value := range current.transitions {
+				for _, transition := range value {
+					stack = append(stack, transition)
+					if _, ok := dests[symbol]; !ok {
+						dests[symbol] = []indexValue{}
+					}
+					dests[symbol] = append(dests[symbol], indexValue{
+						id:        transition.id,
+						accepting: transition.accepting,
+					})
+				}
+				if _, ok := dests[EPSILON]; !ok {
+					dests[EPSILON] = []indexValue{}
+				}
+				dests[EPSILON] = append(dests[EPSILON], indexValue{
+					id:        current.id,
+					accepting: current.accepting,
+				})
+			}
+			result[current.id] = dests
+		}
+		stack = stack[1:]
+	}
+	return result
+
 }
 
 func char(symbol string) nfa {
@@ -60,34 +99,28 @@ func or(first nfa, rest ...nfa) nfa {
 	return first
 }
 
-func star(someNfa nfa) nfa {
-	start := emptyState(false)
-	end := emptyState(true)
-	start.addTransitionForSymbol(EPSILON, someNfa.inState)
-	start.addTransitionForSymbol(EPSILON, &end)
-
-	end.addTransitionForSymbol(EPSILON, someNfa.inState)
-
-	someNfa.outState.addTransitionForSymbol(EPSILON, &end)
-	someNfa.outState.accepting = false
-	return nfa{
-		inState:  &start,
-		outState: &end,
+func class(symbol string, symbols ...string) nfa {
+	someNfa := char(symbol)
+	for _, element := range symbols {
+		someNfa.inState.addTransitionForSymbol(element, someNfa.outState)
 	}
+	return someNfa
+}
+
+func star(someNfa nfa) nfa {
+	someNfa.inState.addTransitionForSymbol(EPSILON, someNfa.outState)
+	someNfa.outState.addTransitionForSymbol(EPSILON, someNfa.inState)
+	return someNfa
 }
 
 func plus(someNfa nfa) nfa {
-	return concat(
-		someNfa,
-		star(someNfa),
-	)
+	someNfa.outState.addTransitionForSymbol(EPSILON, someNfa.inState)
+	return someNfa
 }
 
 func opt(someNfa nfa) nfa {
-	return or(
-		someNfa,
-		epsilon(),
-	)
+	someNfa.inState.addTransitionForSymbol(EPSILON, someNfa.outState)
+	return someNfa
 }
 
 func epsilon() nfa {
