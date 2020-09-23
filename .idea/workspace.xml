@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95f2f975-97b7-42e6-abc9-904d88b724e6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dfa_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dfa.go" beforeDir="false" afterPath="$PROJECT_DIR$/dfa.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nfa.go" beforeDir="false" afterPath="$PROJECT_DIR$/nfa.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nfa_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/nfa_test.go" afterDir="false" />
     </list>
@@ -47,17 +47,17 @@
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
   </component>
-  <component name="RunManager" selected="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (3)">
-    <configuration name="go build nfa.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex">
+    <configuration name="go build dfa.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="regex" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/nfa.go" />
+      <filePath value="$PROJECT_DIR$/dfa.go" />
       <package value="github.com/yasserlamsaougar/regex" />
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestGetTransitionTable in github.com/yasserlamsaougar/regex (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestAcceptComplexExpression in github.com/yasserlamsaougar/regex" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="regex" />
       <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
@@ -65,21 +65,21 @@
       <package value="github.com/yasserlamsaougar/regex" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestGetTransitionTable\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestGetTransitionTable in github.com/yasserlamsaougar/regex (2)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="regex" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/yasserlamsaougar/regex" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestGetTransitionTable\E$" />
+      <pattern value="^\QTestAcceptComplexExpression\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestGetTransitionTable in github.com/yasserlamsaougar/regex (3)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="regex" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/yasserlamsaougar/regex" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestGetTransitionTable\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetTransitionTable in github.com/yasserlamsaougar/regex (4)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="regex" />
       <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
@@ -103,11 +103,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (3)" />
-        <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (2)" />
-        <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (1)" />
-        <item itemvalue="Go Build.go build nfa.go" />
         <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex" />
+        <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (4)" />
+        <item itemvalue="Go Build.go build dfa.go" />
+        <item itemvalue="Go Test.TestAcceptComplexExpression in github.com/yasserlamsaougar/regex" />
+        <item itemvalue="Go Test.TestGetTransitionTable in github.com/yasserlamsaougar/regex (3)" />
       </list>
     </recent_temporary>
   </component>
@@ -131,14 +131,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="561" y="245" key="#Go_Modules/0.0.1536.824@0.0.1536.824" timestamp="1600004661422" />
-    <state x="524" y="115" key="#xdebugger.evaluate" timestamp="1600372386759">
+    <state x="524" y="115" key="#xdebugger.evaluate" timestamp="1600604235008">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="524" y="115" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1600372386759" />
-    <state width="747" height="465" key="DebuggerActiveHint" timestamp="1600289106726">
+    <state x="524" y="115" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1600604235008" />
+    <state width="749" height="465" key="DebuggerActiveHint" timestamp="1600644255806">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="747" height="465" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1600289106726" />
+    <state width="749" height="465" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1600644255806" />
     <state x="662" y="272" key="EnvironmentVariablesDialog" timestamp="1600004659450">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -147,42 +147,42 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="166" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1600004710353" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1600373408266">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600373408266" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1600373408266">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="1493" height="261" key="GridCell.Tab.0.center" timestamp="1600682834603">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600373408266" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1600373408266">
+    <state width="1493" height="261" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600682834603" />
+    <state width="1493" height="261" key="GridCell.Tab.0.left" timestamp="1600682834603">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600373408266" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1600373408266">
+    <state width="1493" height="261" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600682834603" />
+    <state width="1493" height="261" key="GridCell.Tab.0.right" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600373408266" />
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1600372421294">
+    <state width="1493" height="261" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600372421294" />
-    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1600372421294">
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1600372421294" />
-    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1600372421294">
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1600372421294" />
-    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1600372421294">
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1600682834604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1600372421294" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1600198767240">
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1600682834604" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1600643383959">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1600198767240" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1600643383959" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600371436165">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -191,10 +191,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="320" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1600027740050" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1600368810424">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1600642046286">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1600368810424" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1600642046286" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -172,7 +172,19 @@ func TestAcceptorOr(t *testing.T) {
 	}
 }
 
-func TestGetTransitionTable(t *testing.T) {
+func TestAcceptComplexExpression(t *testing.T) {
+	regex := star(or(class("a", "b"), concat(char("a"), char("b"))))
+	exps := []string{"", "ab", "a", "b", "aab", "bab", "abab", "babbbbaaaab"}
+	for _, exp := range exps {
+		assert.True(t, regex.test(exp), "The expression", exp, "should be true")
+	}
+	exps = []string{"cd", "dd"}
+	for _, exp := range exps {
+		assert.False(t, regex.test(exp), "The expression", exp, "should be false")
+	}
+}
+
+func TestCompleteNfa(t *testing.T) {
 	regex := or(
 		char("a"),
 		char("b"),
@@ -199,9 +211,9 @@ func TestGetTransitionTable(t *testing.T) {
 			EPSILON: []int{5},
 		},
 	}
-	transitionTable := regex.getTransitionTable()
+	augmentedNfa := regex.completeNfa()
 
-	for stateNumber, transitionsBySymbol := range transitionTable {
+	for stateNumber, transitionsBySymbol := range augmentedNfa.transitionTable {
 		expectedStateTransitions := expected[stateNumber]
 		for symbol, transitions := range transitionsBySymbol {
 			numbers := []int{}
@@ -209,8 +221,15 @@ func TestGetTransitionTable(t *testing.T) {
 			for _, value := range transitions {
 				numbers = append(numbers, value.number)
 			}
-			assert.ElementsMatchf(t, numbers, expectedTransitions, "the state number %d should point to %+v instead pointing to %+v", stateNumber, expectedTransitions, numbers)
+			assert.ElementsMatchf(t, expectedTransitions, numbers, "the state number %d should point to %+v instead pointing to %+v", stateNumber, expectedTransitions, numbers)
 		}
 	}
+	assert.Equal(t, map[string]bool{
+		"a": true,
+		"b": true,
+	}, augmentedNfa.alphabet, "alphabet generated is incorrect")
 
+	assert.Equal(t, map[int]bool{
+		5: true,
+	}, augmentedNfa.accepting, "accepting state should be 5")
 }

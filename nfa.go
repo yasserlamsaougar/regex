@@ -5,7 +5,15 @@ const EPSILON = "ε"
 type indexValue struct {
 	id        string
 	accepting bool
-	number int
+	number    int
+}
+
+type augmentedNfa struct {
+	nfa             nfa
+	transitionTable map[int]map[string][]indexValue
+	alphabet        map[string]bool
+	accepting       map[int]bool
+	starting        int
 }
 
 type nfa struct {
@@ -30,9 +38,13 @@ func mergeMapAndGet(someMap map[string][]indexValue, key string, value []indexVa
 	return someMap[key]
 }
 
-
-
-func (thisNfa nfa) getTransitionTable() map[int]map[string][]indexValue {
+func (thisNfa nfa) completeNfa() augmentedNfa {
+	augmentedNfa := augmentedNfa{
+		nfa: thisNfa,
+		starting:  0,
+		alphabet:  map[string]bool{},
+		accepting: map[int]bool{},
+	}
 	result := map[int]map[string][]indexValue{}
 	visited := map[string]int{}
 	stack := []*state{thisNfa.inState}
@@ -48,21 +60,43 @@ func (thisNfa nfa) getTransitionTable() map[int]map[string][]indexValue {
 					dests[symbol] = append(mergeMapAndGet(dests, symbol, []indexValue{}), indexValue{
 						id:        transition.id,
 						accepting: transition.accepting,
-						number: visited[transition.id],
+						number:    visited[transition.id],
 					})
+					if symbol != EPSILON {
+						augmentedNfa.alphabet[symbol] = true
+					}
 				}
 			}
 			dests[EPSILON] = append(mergeMapAndGet(dests, EPSILON, []indexValue{}), indexValue{
 				id:        current.id,
 				accepting: current.accepting,
-				number: visited[current.id],
+				number:    visited[current.id],
 			})
 			result[visited[current.id]] = dests
+			if current.accepting {
+				augmentedNfa.accepting[visited[current.id]] = true
+			}
 		}
 		stack = stack[1:]
 	}
-	return result
+	augmentedNfa.transitionTable = result
+	return augmentedNfa
+}
 
+
+func clearNfaTransitionTable(transitionTable map[int]map[string][]indexValue) map[int]map[string][]int {
+	result := map[int]map[string][]int{}
+	for key, value := range transitionTable {
+		result[key] = map[string][]int{}
+		for symbol, transitions := range value {
+			ints := []int{}
+			for _, transition := range transitions {
+				ints = append(ints, transition.number)
+			}
+			result[key][symbol] = ints
+		}
+	}
+	return result
 }
 
 func char(symbol string) nfa {
@@ -84,6 +118,8 @@ func concatPair(first nfa, second nfa) nfa {
 		outState: second.outState,
 	}
 }
+
+
 
 func concat(first nfa, rest ...nfa) nfa {
 	for _, element := range rest {
